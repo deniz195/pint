@@ -355,6 +355,7 @@ class TestQuantity(QuantityTestCase):
         pickle_test(self.Q_(2.4, 'm/s'))
 
 
+    @helpers.requires_numpy()
     def test_from_sequence(self):
         u_array_ref = self.Q_([200, 1000], 'g')
         u_array_ref_reversed = self.Q_([1000, 200], 'g')
