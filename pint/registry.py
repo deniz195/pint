@@ -122,9 +122,9 @@ class BaseRegistry(meta.with_metaclass(_Meta)):
         from .quantity import build_quantity_class
         self.Quantity = build_quantity_class(self, force_ndarray)
 
-        from .measurement import build_measurement_class
-        self.Measurement = build_measurement_class(self, force_ndarray)
-
+        # for backwards compatibility
+        self.Measurement = self.Quantity
+        
         self._filename = filename
 
         #: Action to take in case a unit is redefined. 'warn', 'raise', 'ignore'

@@ -24,7 +24,7 @@ from .formatting import (remove_custom_flags, siunitx_format_unit, ndarray_to_la
 from .errors import (DimensionalityError, OffsetUnitCalculusError,
                      UndefinedUnitError, UnitStrippedWarning)
 from .definitions import UnitDefinition
-from .compat import string_types, ndarray, np, _to_magnitude, long_type
+from .compat import string_types, ndarray, np, _to_magnitude, long_type, ufloat
 from .util import (PrettyIPython, logger, UnitsContainer, SharedRegistryObject,
                    to_units_container, infer_base_unit,
                    fix_str_conversions)
@@ -1649,7 +1649,7 @@ class _Quantity(PrettyIPython, SharedRegistryObject):
 
         return self.magnitude.__array_wrap__(obj, context)
 
-    # Measurement support
+    # uncertainties support
     def plus_minus(self, error, relative=False):
         if isinstance(error, self.__class__):
             if relative:
@@ -1659,7 +1659,7 @@ class _Quantity(PrettyIPython, SharedRegistryObject):
             if relative:
                 error = error * abs(self.magnitude)
 
-        return self._REGISTRY.Measurement(copy.copy(self.magnitude), error, self._units)
+        return self._REGISTRY.Quantity(ufloat(copy.copy(self.magnitude), error), self._units)
 
     # methods/properties that help for math operations with offset units
     @property
