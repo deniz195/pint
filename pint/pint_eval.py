@@ -19,6 +19,7 @@ from .errors import DefinitionSyntaxError
 
 # For controlling order of operations
 _OP_PRIORITY = {
+    '±': 4,
     '**': 3,
     '^': 3,
     'unary': 2,
@@ -29,7 +30,15 @@ _OP_PRIORITY = {
     '-' : 0
 }
 
+def make_operator_not_implemented(name):
+    def operator_not_implemented(*args):
+        raise NotImplemented(f'The operator "{name}" is not implemented!')
+    return operator_not_implemented
+
 _BINARY_OPERATOR_MAP = {
+    # operator ± is used to construct Measurements
+    # this requires a unit registry, which is bound later
+    '±': make_operator_not_implemented('±'),
     '**': operator.pow,
     '*': operator.mul,
     '': operator.mul, # operator for implicit ops

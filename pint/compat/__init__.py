@@ -20,6 +20,8 @@ from decimal import Decimal
 from . import tokenize
 
 ENCODING_TOKEN = tokenize.ENCODING
+ERROR_TOKEN = tokenize.ERRORTOKEN
+OP_TOKEN = tokenize.OP
 
 PYTHON3 = sys.version >= '3'
 
@@ -27,6 +29,8 @@ def tokenizer(input_string):
     for tokinfo in tokenize.tokenize(BytesIO(input_string.encode('utf-8')).readline):
         if tokinfo.type == ENCODING_TOKEN:
             continue
+        if tokinfo.type == ERROR_TOKEN and tokinfo.string == '±':
+            tokinfo = tokinfo._replace(type = OP_TOKEN)
         yield tokinfo
 
 

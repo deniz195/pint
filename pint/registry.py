@@ -52,14 +52,14 @@ from .util import (logger, pi_theorem, solve_dependencies, ParserHelper,
                    find_shortest_path, UnitsContainer, _is_dim,
                    to_units_container, SourceIterator)
 
-from .compat import tokenizer, string_types, meta
+from .compat import tokenizer, string_types, meta, ufloat
 from .definitions import (Definition, UnitDefinition, PrefixDefinition,
                           DimensionDefinition)
 from .converters import ScaleConverter
 from .errors import (DimensionalityError, UndefinedUnitError,
                      DefinitionSyntaxError, RedefinitionError)
 
-from .pint_eval import build_eval_tree
+from .pint_eval import build_eval_tree, _BINARY_OPERATOR_MAP
 from . import systems
 
 _BLOCK_RE = re.compile(r' |\(')
@@ -862,9 +862,14 @@ class BaseRegistry(meta.with_metaclass(_Meta)):
         input_string = string_preprocessor(input_string)
         gen = tokenizer(input_string)
 
+        bin_op = _BINARY_OPERATOR_MAP
+        bin_op['±'] = self.Measurement        
+        # bin_op['±'] = ufloat
+
         return build_eval_tree(gen).evaluate(lambda x: self._eval_token(x,
                                                                         case_sensitive=case_sensitive,
-                                                                        **values))
+                                                                        **values),
+                                              bin_op=bin_op)
 
     __call__ = parse_expression
 
