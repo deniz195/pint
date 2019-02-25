@@ -1649,7 +1649,7 @@ class _Quantity(PrettyIPython, SharedRegistryObject):
 
         return self.magnitude.__array_wrap__(obj, context)
 
-    # uncertainties support
+    # Measurement support
     def plus_minus(self, error, relative=False):
         if isinstance(error, self.__class__):
             if relative:
@@ -1659,7 +1659,8 @@ class _Quantity(PrettyIPython, SharedRegistryObject):
             if relative:
                 error = error * abs(self.magnitude)
 
-        return self._REGISTRY.Quantity(ufloat(copy.copy(self.magnitude), error), self._units)
+         return self._REGISTRY.Measurement(copy.copy(self.magnitude), error, self._units)
+         # return self._REGISTRY.Quantity(ufloat(copy.copy(self.magnitude), error), self._units)
 
     # methods/properties that help for math operations with offset units
     @property
