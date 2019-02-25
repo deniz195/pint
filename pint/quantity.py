@@ -1660,7 +1660,6 @@ class _Quantity(PrettyIPython, SharedRegistryObject):
                 error = error * abs(self.magnitude)
 
          return self._REGISTRY.Measurement(copy.copy(self.magnitude), error, self._units)
-         # return self._REGISTRY.Quantity(ufloat(copy.copy(self.magnitude), error), self._units)
 
     # methods/properties that help for math operations with offset units
     @property
