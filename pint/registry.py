@@ -52,7 +52,7 @@ from .util import (logger, pi_theorem, solve_dependencies, ParserHelper,
                    find_shortest_path, UnitsContainer, _is_dim,
                    to_units_container, SourceIterator)
 
-from .compat import tokenizer, string_types, meta, ufloat
+from .compat import tokenizer, string_types, meta
 from .definitions import (Definition, UnitDefinition, PrefixDefinition,
                           DimensionDefinition)
 from .converters import ScaleConverter
