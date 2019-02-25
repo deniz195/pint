@@ -10,7 +10,7 @@
 from __future__ import division, unicode_literals, print_function, absolute_import
 
 from .compat import ufloat
-from .formatting import _FORMATS, siunitx_format_unit
+from .formatting import _FORMATS, siunitx_format_unit, remove_custom_flags
 
 MISSING = object()
 
@@ -111,6 +111,7 @@ class _Measurement(object):
             newspec = spec.replace('H', '')
             pars = _FORMATS['H']['parentheses_fmt']
 
+        newspec = remove_custom_flags(newspec)
         mag = format(self.magnitude, newspec).replace(pm, sp + newpm + sp)
 
         if 'L' in newspec and 'S' in newspec:
