@@ -859,12 +859,12 @@ class BaseRegistry(meta.with_metaclass(_Meta)):
         if not input_string:
             return self.Quantity(1)
 
-        input_string = string_preprocessor(input_string)
-        gen = tokenizer(input_string)
-
         bin_op = _BINARY_OPERATOR_MAP
         bin_op['±'] = self.Measurement        
         # bin_op['±'] = ufloat
+
+        input_string = string_preprocessor(input_string)
+        gen = tokenizer(input_string)
 
         return build_eval_tree(gen).evaluate(lambda x: self._eval_token(x,
                                                                         case_sensitive=case_sensitive,

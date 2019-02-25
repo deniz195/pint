@@ -584,6 +584,7 @@ def string_preprocessor(input_string):
 
     input_string = input_string.replace(",", "")
     input_string = input_string.replace(" per ", "/")
+    input_string = input_string.replace('+/-', '±')
 
     for a, b in _subs_re:
         input_string = a.sub(b, input_string)
