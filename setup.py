@@ -28,9 +28,9 @@ long_description = '\n\n'.join([read('README'),
 __doc__ = long_description
 
 setup(
-    name='Pint',
-    version='0.10.dev0',
-    description='Physical quantities module',
+    name='pint-mtools',
+    version='0.12.',
+    description='Physical quantities module (modified for unitdoc)',
     long_description=long_description,
     keywords='physical quantities unit conversion science',
     author='Hernan E. Grecco',
@@ -38,10 +38,10 @@ setup(
     url='https://github.com/hgrecco/pint',
     test_suite='pint.testsuite.testsuite',
     zip_safe=True,
-    packages=['pint'],
+    packages=['pint_mtools'],
     package_data={
-        'pint': ['default_en.txt',
-                 'constants_en.txt']
+        'pint_mtools': ['default_en.txt',
+                        'constants_en.txt']
       },
     include_package_data=True,
     license='BSD',
