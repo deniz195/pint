@@ -920,17 +920,36 @@ class _Quantity(PrettyIPython, SharedRegistryObject):
 
         new_self = self
 
-        if not self._ok_for_muldiv(no_offset_units_self):
-            raise OffsetUnitCalculusError(self._units, other._units)
-        elif no_offset_units_self == 1 and len(self._units) == 1:
+
+        if new_self.dimensionless:
             new_self = self.to_root_units()
-
-        no_offset_units_other = len(other._get_non_multiplicative_units())
-
-        if not other._ok_for_muldiv(no_offset_units_other):
-            raise OffsetUnitCalculusError(self._units, other._units)
-        elif no_offset_units_other == 1 and len(other._units) == 1:
+        elif other.dimensionless:
             other = other.to_root_units()
+        else:
+            if not self._ok_for_muldiv(no_offset_units_self):
+                raise OffsetUnitCalculusError(self._units, other._units)
+            elif no_offset_units_self == 1 and len(self._units) == 1:
+                new_self = self.to_root_units()
+
+            no_offset_units_other = len(other._get_non_multiplicative_units())
+
+            if not other._ok_for_muldiv(no_offset_units_other):
+                raise OffsetUnitCalculusError(self._units, other._units)
+            elif no_offset_units_other == 1 and len(other._units) == 1:
+                other = other.to_root_units()
+
+        
+        # if not self._ok_for_muldiv(no_offset_units_self):
+        #     raise OffsetUnitCalculusError(self._units, other._units)
+        # elif no_offset_units_self == 1 and len(self._units) == 1:
+        #     new_self = self.to_root_units()
+
+        # no_offset_units_other = len(other._get_non_multiplicative_units())
+
+        # if not other._ok_for_muldiv(no_offset_units_other):
+        #     raise OffsetUnitCalculusError(self._units, other._units)
+        # elif no_offset_units_other == 1 and len(other._units) == 1:
+        #     other = other.to_root_units()
 
         magnitude = magnitude_op(new_self._magnitude, other._magnitude)
         units = units_op(new_self._units, other._units)
