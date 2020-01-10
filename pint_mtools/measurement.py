@@ -69,7 +69,8 @@ class _Measurement(object):
                                                              self.units)
 
     def __str__(self):
-        return '{0}'.format(self)
+        #return '{0}'.format(self)
+        return format(self, 'l.2f')
 
     def __format__(self, spec):
         # special cases
@@ -125,7 +126,10 @@ class _Measurement(object):
         if 'uS' in newspec or 'ue' in newspec or 'u%' in newspec:
             return mag + space + format(self.units, spec)
         else:
-            return pars.format(mag) + space + format(self.units, spec)
+            if 'l' in newspec:
+                return pars.format(mag) + space + format(self.units, '')
+            else:
+                return pars.format(mag) + space + format(self.units, spec)
 
 
 def build_measurement_class(registry, force_ndarray=False):
