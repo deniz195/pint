@@ -29,7 +29,7 @@ __doc__ = long_description
 
 setup(
     name='pint-mtools',
-    version='0.12.2',
+    version='0.12.3',
     description='Physical quantities module (modified for unitdoc)',
     long_description=long_description,
     keywords='physical quantities unit conversion science',
