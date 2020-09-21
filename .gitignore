@@ -5,11 +5,13 @@ __pycache__
 .DS_Store
 docs/_build/
 .idea
+.vscode
 build/
 dist/
 MANIFEST
-.tox
 *pytest_cache*
+.eggs
+.mypy_cache
 
 # WebDAV file system cache files
 .DAV/
@@ -26,3 +28,6 @@ test/
 # test csv which should be user generated
 notebooks/pandas_test.csv
 desktop.ini
+
+# dask stuff
+dask-worker-space
