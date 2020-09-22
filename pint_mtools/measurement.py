@@ -80,8 +80,7 @@ class Measurement(Quantity):
         )
 
     def __str__(self):
-        # return "{}".format(self)
-        return format(self, "l.2f")
+        return format(self)
 
     def __format__(self, spec):
         # special cases

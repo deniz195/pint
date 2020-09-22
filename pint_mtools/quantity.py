@@ -1222,7 +1222,6 @@ class Quantity(PrettyIPython, SharedRegistryObject):
 
         new_self = self
 
-
         if new_self.dimensionless:
             new_self = self.to_root_units()
         elif other.dimensionless:
@@ -1240,7 +1239,6 @@ class Quantity(PrettyIPython, SharedRegistryObject):
             elif no_offset_units_other == 1 and len(other._units) == 1:
                 other = other.to_root_units()
 
-        
         # if not self._ok_for_muldiv(no_offset_units_self):
         #     raise OffsetUnitCalculusError(self._units, other._units)
         # elif no_offset_units_self == 1 and len(self._units) == 1:
@@ -1255,6 +1253,18 @@ class Quantity(PrettyIPython, SharedRegistryObject):
 
         magnitude = magnitude_op(new_self._magnitude, other._magnitude)
         units = units_op(new_self._units, other._units)
+
+        # Detect and stop multiplications of Measurement class from the right, which will yield
+        # Quantity class with uncertainties magnitude..
+        # DB 200922
+        if (
+            str(type(self))
+            == "<class 'pint_mtools.quantity.build_quantity_class.<locals>.Quantity'>"
+            and str(type(magnitude).__module__) == "uncertainties.core"
+        ):
+            # This will tell python that __mul__ is not implemented.
+            # It will then try to perform __rmul__ which yields the correct result
+            return NotImplemented
 
         return self.__class__(magnitude, units)
 

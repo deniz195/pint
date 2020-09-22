@@ -26,9 +26,17 @@ def missing_dependency(package, display_name=None):
     return _inner
 
 
+def fix_pm_operator_token(ti):
+    if ti.string == "±":
+        return type(ti)(tokenize.OP, *ti[1:])
+    else:
+        return ti
+
+
 def tokenizer(input_string):
     for tokinfo in tokenize.tokenize(BytesIO(input_string.encode("utf-8")).readline):
         if tokinfo.type != tokenize.ENCODING:
+            tokinfo = fix_pm_operator_token(tokinfo)
             yield tokinfo
 
 
